@@ -2,14 +2,14 @@
 
   var head = document.head || document.getElementsByTagName('head')[0];
 
-  var require = function(url,key,cacheBurst){
-    if(key) fetchScript(url,key,cacheBurst);
+  var require = function(url,key,cacheBust){
+    if(key) fetchScript(url,key,cacheBust);
     else console.log("No key supplied. Key is mandatory");
   }
 
-  var fetchScript = function(url,key,cacheBurst){
+  var fetchScript = function(url,key,cacheBust){
     var scriptData = getLocalStoreData(key);
-    if(scriptData && !cacheBurst){
+    if(scriptData && !cacheBust){
       injectScript(scriptData.data);
       console.log('script found in local Storage');
     }
