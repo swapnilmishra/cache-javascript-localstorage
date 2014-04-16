@@ -45,7 +45,7 @@
     // injectScript( JSON.parse(data) );
   }
 
-  window.fclocalstorage  = {
+  window.scriptsinlocal  = {
     require       : require,
     getLocalStoreData : getLocalStoreData
   };
