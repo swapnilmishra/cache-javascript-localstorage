@@ -1,17 +1,61 @@
 (function(window,document,localStorage){
 
+  var configs = {
+    key         : undefined,
+    url         : undefined,
+    cacheBuster : undefined,
+    callback    : undefined
+  };
+
   var head = document.head || document.getElementsByTagName('head')[0];
 
-  var require = function(url,key,cacheBust){
-    if(key) fetchScript(url,key,cacheBust);
-    else console.log("No key supplied. Key is mandatory");
+  var require = function(key,url,cacheBuster,callback){
+
+    configs.key = key;
+    configs.url = url;
+    configs.cacheBuster = cacheBuster;
+    configs.callback = callback;
+
+    if(configs.key){
+      resolveScript(configs.url);
+    }
+    else {
+      console.log("No key supplied. Key is mandatory");
+    }
   }
 
-  var fetchScript = function(url,key,cacheBust){
-    var scriptData = getLocalStoreData(key);
-    if(scriptData && !cacheBust){
-      injectScript(scriptData.data);
+  var resolveScript = function(url){
+    
+    var scriptData = getLocalStoreData(configs.key),
+        cacheBuster = configs.cacheBuster;
+
+    if(scriptData){
       console.log('script found in local Storage');
+      if(cacheBuster && typeof cacheBuster === 'number'){
+        if(cacheBuster === parseInt(scriptData.cacheBuster)){
+          console.log('No cache busting(number) => Inject Script');
+          injectScript(scriptData.data,configs.callback);
+        }
+        else {
+          console.log('Cache busting(number) => Fetch Script');
+          fetchScript(configs.url);
+        }
+      }
+      else if(typeof cacheBuster === 'boolean'){
+        console.log('Cache busting boolean');
+        if(cacheBuster){
+          console.log('Cache busting(boolean) => Fetch Script');
+          fetchScript(configs.url);
+        }
+        else{
+          console.log('No cache busting(boolean) => Inject Script');
+          injectScript(scriptData.data,configs.callback);
+        }
+      }
+      else {
+        console.log('Either cache buster is undefined or not of proper type. Injecting script anyways');
+        injectScript(scriptData.data,configs.callback);
+      }
     }
     else{
       if(!url){
@@ -19,31 +63,39 @@
       }
       else {
         console.log("Fetching script");
-        $.getScript(url)
-        .done(function(data,status){
-          setLocalStoreData(key,data);
-        });
+        fetchScript(configs.url);
       }
     }
   }
+  
+  var fetchScript = function(url){
 
-  var setLocalStoreData = function(key,data){
-    var stringifyData  = JSON.stringify({data:data});
-    localStorage.setItem(key,stringifyData);
+    $.getScript(url)
+      .done(function(data,status){
+        configs.callback();
+        setLocalStoreData(configs.key,data);
+    });
+    
   }
-
-  var injectScript = function( obj ) {
-    var script = document.createElement('script');
-    script.defer = true;
-    script.text = obj;
-    head.appendChild( script );
-  };
 
   var getLocalStoreData = function(key){
     var data = localStorage.getItem(key);
     return JSON.parse(data);
-    // injectScript( JSON.parse(data) );
   }
+
+  var setLocalStoreData = function(key,data){
+    var stringifyData  = JSON.stringify({cacheBuster:configs.cacheBuster,data:data});
+    localStorage.setItem(key,stringifyData);
+  }
+
+  var injectScript = function( obj,callback ) {
+    var script = document.createElement('script');
+    script.defer = true;
+    script.text = obj;
+    head.appendChild( script );
+    if(callback) callback();
+
+  };
 
   window.scriptsinlocal  = {
     require       : require,
