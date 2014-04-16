@@ -29,14 +29,14 @@ In below code __34__ is cache busting param so for the next subsequent loads if 
 // load from local storage if present or else fetch and save
  scriptsinlocal.require('myscript.js','mykey',34,callback)
  
- // network call
+// network call
  scriptsinlocal.require('myscript.js','mykey',35,callback)
 ```
 
 In below code cache buster is __true__ means we want to bust the cache and make network call to fetch script irrespective of weather it is present in local storage or not.
 ```javascript
 // load from local storage if present or else fetch and save
-scriptsinlocal.require('myscript.js','mykey',false,callback)
+ scriptsinlocal.require('myscript.js','mykey',false,callback)
 //network call
  scriptsinlocal.require('myscript.js','mykey',true,callback)
 ```
