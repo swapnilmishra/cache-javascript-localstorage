@@ -24,13 +24,20 @@ __cacheBust : Number,Boolean | optional | default:false__
 
 Cache buster param to let it know if it should fetch the script again. It can take number values or boolean. By default cacheBuster is false. For e.g
 
-In below code __34__ is cache busting param here so till you keep passing 34 it will load script from local storage but, if you change it to some other value it will make a new network call and fetch the script.
+In below code __34__ is cache busting param so for the next subsequent loads if you keep passing 34, it will load script from local storage but, if you change it to some other value it will make a network call and fetch the script again.
 ```javascript
+// load from local storage if present or else fetch and save
  scriptsinlocal.require('myscript.js','mykey',34,callback)
+ 
+ // network call
+ scriptsinlocal.require('myscript.js','mykey',35,callback)
 ```
 
 In below code cache buster is __true__ means we want to bust the cache and make network call to fetch script irrespective of weather it is present in local storage or not.
 ```javascript
+// load from local storage if present or else fetch and save
+scriptsinlocal.require('myscript.js','mykey',false,callback)
+//network call
  scriptsinlocal.require('myscript.js','mykey',true,callback)
 ```
 
