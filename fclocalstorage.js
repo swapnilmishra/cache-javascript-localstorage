@@ -2,14 +2,15 @@
 
   var head = document.head || document.getElementsByTagName('head')[0];
 
-  var require = function(url,key){
-    fetchScript(url,key);
+  var require = function(url,key,cacheBurst){
+    if(key) fetchScript(url,key,cacheBurst);
+    else console.log("No key supplied. Key is mandatory");
   }
 
-  var fetchScript = function(url,key){
+  var fetchScript = function(url,key,cacheBurst){
     var scriptData = getLocalStoreData(key);
-    if(scriptData){
-      injectScript(scriptData);
+    if(scriptData && !cacheBurst){
+      injectScript(scriptData.data);
       console.log('script found in local Storage');
     }
     else{
@@ -27,7 +28,7 @@
   }
 
   var setLocalStoreData = function(key,data){
-    var stringifyData  = JSON.stringify(data);
+    var stringifyData  = JSON.stringify({data:data});
     localStorage.setItem(key,stringifyData);
   }
 

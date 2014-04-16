@@ -10,7 +10,7 @@ Requires jQuery as dependency for script fetch call.
 To use it call 
 
 ```javascript
-  fclocalstorage.require(url,key)
+  fclocalstorage.require(url<String|required>,key<String|required>,cacheBuster<Boolean|optional>)
 ```
 
-key is the key name by which you want to store it
+Key is the key name by which you want to store it. Pass the cacheBuster param if you want to fetch it again. By default cahceBuster is false.
