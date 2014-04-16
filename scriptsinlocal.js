@@ -72,7 +72,7 @@
 
     $.getScript(url)
       .done(function(data,status){
-        configs.callback();
+        if(configs.callback)configs.callback();
         setLocalStoreData(configs.key,data);
     });
     
