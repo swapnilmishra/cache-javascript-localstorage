@@ -10,7 +10,7 @@
   var head = document.head || document.getElementsByTagName('head')[0];
 
   var require = function(key,url,cacheBuster,callback){
-
+    console.time('Fetch Templates');
     configs.key = key;
     configs.url = url;
     configs.cacheBuster = cacheBuster;
@@ -73,6 +73,7 @@
     $.getScript(url)
       .done(function(data,status){
         if(configs.callback)configs.callback();
+        console.timeEnd('Fetch Templates');
         setLocalStoreData(configs.key,data);
     });
     
@@ -93,6 +94,7 @@
     script.defer = true;
     script.text = obj;
     head.appendChild( script );
+    console.timeEnd('Fetch Templates');
     if(callback) callback();
 
   };
