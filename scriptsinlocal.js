@@ -9,7 +9,7 @@
 
   var head = document.head || document.getElementsByTagName('head')[0];
 
-  var require = function(key,url,cacheBuster,callback){
+  var require = function(url,key,cacheBuster,callback){
     console.time('Fetch Templates');
     configs.key = key;
     configs.url = url;
