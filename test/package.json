@@ -1,0 +1,26 @@
+{
+  "name": "cache-javascript-localstorage",
+  "version": "1.0.0",
+  "description": "Cache JS file in localstorage",
+  "main": "scriptsinlocal.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swapnilmishra/cache-javascript-localstorage.git"
+  },
+  "keywords": [
+    "javascript",
+    "localStorage"
+  ],
+  "author": "Swapnil Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swapnilmishra/cache-javascript-localstorage/issues"
+  },
+  "homepage": "https://github.com/swapnilmishra/cache-javascript-localstorage#readme",
+  "devDependencies": {
+    "mocha-phantomjs": "^4.1.0",
+    "phantomjs": "^2.1.7"
+  }
+}

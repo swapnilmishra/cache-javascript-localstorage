@@ -1,0 +1,26 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <script src="vendor/jquery.2.1.0.js"></script>
+  <script src="vendor/mocha.js"></script>
+  <script src="vendor/chai.js"></script>
+  <script src="scriptsinlocal.js"></script>
+  <script src="mock.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script src="test.js"></script>
+  <script>
+    $(function() {
+      if (mochaPhantomJS) {
+        mochaPhantomJS.run();
+      }
+      else {
+        mocha.run();
+      }
+    });
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
+</html>
